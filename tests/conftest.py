@@ -11,22 +11,25 @@ import tests.utils.attach
 @pytest.fixture(scope='function', autouse=True)
 def setup_browser(request):
     options = Options()
+    options = webdriver.ChromeOptions()
     selenoid_capabilities = {
         "browserName": "chrome",
-        "browserVersion": "127.0",
+        "browserVersion": "128.0",
         "selenoid:options": {
             "enableVNC": True,
-            "enableVideo": True
-        }
+            "enableVideo": True,
+            "enableLog": True
+        },
+        "goog:loggingPrefs": {"browser": "ALL"}
     }
     options.capabilities.update(selenoid_capabilities)
     driver = webdriver.Remote(
-        command_executor=f"https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options
     )
+    browser.config.driver = driver
 
-    browser = Browser(Config(driver))
-    yield browser
+    yield
 
     tests.utils.attach.add_screenshot(browser)
     tests.utils.attach.add_logs(browser)
@@ -34,8 +37,3 @@ def setup_browser(request):
     tests.utils.attach.add_video(browser)
 
     browser.quit()
-
-@pytest.fixture(scope='function', autouse=True)
-def browser_management():
-    browser.config.base_url = 'https://demoqa.com'
-
