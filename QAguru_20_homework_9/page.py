@@ -6,8 +6,9 @@ from QAguru_20_homework_9.resourses import resource_path
 
 class RegistrationPage:
     def register_user(self, user: User):
-        browser.element('footer').execute_script('element.remove()')
-        # browser.execute_script('document.querySelector("#fixedban").remove()')
+        browser.driver.execute_script("""
+                document.querySelectorAll('.Google-Ad').forEach(el => el.remove());
+            """)
         browser.open("https://demoqa.com/automation-practice-form")
         browser.element('#firstName').type(user.first_name)
         browser.element('#lastName').type(user.last_name)
@@ -16,7 +17,7 @@ class RegistrationPage:
         browser.element('#userNumber').type(user.mobile)
         day, month_year = user.birthday.split(sep=' ')
         month, year = month_year.split(sep=',')
-        browser.element("#dateOfBirthInput").click()
+        browser.element('#dateOfBirthInput').perform(command.js.scroll_into_view).should(be.visible).click()
         browser.element(".react-datepicker__year-select").type(f"{year}").click()
         browser.element(".react-datepicker__month-select").type(f"{month}").click()
         browser.element(f".react-datepicker__day--0{day}").click()
