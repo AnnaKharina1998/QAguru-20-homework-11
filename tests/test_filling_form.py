@@ -1,3 +1,5 @@
+import allure
+
 from QAguru_20_homework_9.moodel import Gender, Hobby, State, User
 from QAguru_20_homework_9.page import RegistrationPage
 
@@ -18,7 +20,9 @@ def test_correct_filling():
                 state=State.NCR,
                 city='Delhi')
     # заполнение данных
-    registration_page.register_user(user)
+    with allure.step("Ввести информацию о пользователе в форму"):
+        registration_page.register_user(user)
 
     # проверка
-    registration_page.should_have_filled(user)
+    with allure.step("Проверить корректность заполнения информации"):
+        registration_page.should_have_filled(user)

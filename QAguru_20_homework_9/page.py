@@ -6,10 +6,10 @@ from QAguru_20_homework_9.resourses import resource_path
 
 class RegistrationPage:
     def register_user(self, user: User):
+        browser.open("https://demoqa.com/automation-practice-form")
         browser.driver.execute_script("""
                 document.querySelectorAll('.Google-Ad').forEach(el => el.remove());
             """)
-        browser.open("https://demoqa.com/automation-practice-form")
         browser.element('#firstName').type(user.first_name)
         browser.element('#lastName').type(user.last_name)
         browser.element('#userEmail').type(user.email)

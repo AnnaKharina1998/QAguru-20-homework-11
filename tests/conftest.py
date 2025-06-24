@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selene import Browser, Config
 
-import tests.utils.attach
+from tests.utils import attach
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -28,14 +28,13 @@ def setup_browser(request):
         options=options
     )
     browser.config.driver = driver
-    browser.config.window_width = 1920
-    browser.config.window_height = 1080
+    browser.config.driver.maximize_window()
 
-    yield
+    yield browser
 
-    tests.utils.attach.add_screenshot(driver)
-    tests.utils.attach.add_logs(driver)
-    tests.utils.attach.add_html(driver)
-    tests.utils.attach.add_video(driver)
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+    attach.add_html(browser)
+    attach.add_video(browser)
 
     browser.quit()
