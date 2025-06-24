@@ -21,12 +21,12 @@ class RegistrationPage:
         browser.element(".react-datepicker__year-select").type(f"{year}").click()
         browser.element(".react-datepicker__month-select").type(f"{month}").click()
         browser.element(f".react-datepicker__day--0{day}").click()
-        browser.element('#subjectsInput').type(user.subject[:2]).press_enter()
-        browser.element(f"//label[contains(text(),'{user.hobby.value}')]").click()
-        browser.element('#uploadPicture').send_keys(resource_path(user.picture_name))
+        browser.element('#subjectsInput').perform(command.js.scroll_into_view).should(be.visible).type(user.subject[:2]).press_enter()
+        browser.element(f"//label[contains(text(),'{user.hobby.value}')]").perform(command.js.scroll_into_view).should(be.visible).click()
+        browser.element('#uploadPicture').perform(command.js.scroll_into_view).should(be.visible).send_keys(resource_path(user.picture_name))
         browser.element('#currentAddress').perform(command.js.scroll_into_view).type(user.adress)
-        browser.element("//div[@id='stateCity-wrapper']/descendant::input[1]").type(user.state.value).press_enter()
-        browser.element("//div[@id='stateCity-wrapper']/descendant::input[2]").type(user.city).press_enter()
+        browser.element("//div[@id='stateCity-wrapper']/descendant::input[1]").perform(command.js.scroll_into_view).should(be.visible).type(user.state.value).press_enter()
+        browser.element("//div[@id='stateCity-wrapper']/descendant::input[2]").perform(command.js.scroll_into_view).should(be.visible).type(user.city).press_enter()
         browser.element('#submit').perform(command.js.scroll_into_view).click()
 
     def should_have_filled(self, user: User):
