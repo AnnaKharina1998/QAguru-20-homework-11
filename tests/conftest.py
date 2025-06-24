@@ -10,7 +10,7 @@ import tests.utils.attach
 
 @pytest.fixture(scope='function', autouse=True)
 def setup_browser(request):
-    options = Options()
+    # options = Options()
     options = webdriver.ChromeOptions()
     selenoid_capabilities = {
         "browserName": "chrome",
@@ -28,6 +28,8 @@ def setup_browser(request):
         options=options
     )
     browser.config.driver = driver
+    browser.config.window_width = 1920
+    browser.config.window_height = 1080
 
     yield
 
