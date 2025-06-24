@@ -33,9 +33,9 @@ def setup_browser(request):
 
     yield
 
-    # tests.utils.attach.add_screenshot(browser)
-    # tests.utils.attach.add_logs(browser)
-    # tests.utils.attach.add_html(browser)
-    # tests.utils.attach.add_video(browser)
+    tests.utils.attach.add_screenshot(driver)
+    tests.utils.attach.add_logs(driver)
+    tests.utils.attach.add_html(driver)
+    tests.utils.attach.add_video(driver)
 
     browser.quit()
